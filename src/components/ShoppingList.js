@@ -1,9 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import Item from "./Item";
 
 function ShoppingList({ items }) {
+  const [displayItems, setDisplayItems] = useState(items)
+  function handleFilter(event){
+    const newDisplayArray = event.target.value==='All'? [...items] : items.filter(e=>e.category===event.target.value)
+    setDisplayItems(newDisplayArray)
+  }
   return (
-    <div className="ShoppingList">
+    <div className="ShoppingList" onChange={handleFilter}>
       <div className="Filter">
         <select name="filter">
           <option value="All">Filter by category</option>
@@ -13,7 +18,7 @@ function ShoppingList({ items }) {
         </select>
       </div>
       <ul className="Items">
-        {items.map((item) => (
+        {displayItems.map((item) => (
           <Item key={item.id} name={item.name} category={item.category} />
         ))}
       </ul>
@@ -22,3 +27,7 @@ function ShoppingList({ items }) {
 }
 
 export default ShoppingList;
+//make state array for display items
+
+//make function to handleFilter that setDisplayItems
+//add onChange with handleFilter to the ShoppingList div
